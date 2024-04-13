@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.*;
 
 class Solution {
     public int[] solution(int[] num_list) {
@@ -9,5 +10,10 @@ class Solution {
         }
         
         return answer;
+        
+        // stream 사용
+        // List<Integer> list = Arrays.stream(num_list).boxed().collect(Collectors.toList());
+        // Collections.reverse(list);
+        // return list.stream().mapToInt(Integer::intValue).toArray();
     }
 }
