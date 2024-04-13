@@ -1,19 +1,17 @@
 class Solution {
+    
+    // 최대공약수
+    public int GCD(int num1, int num2) {
+        if (num1 % num2 == 0) return num2;
+        else return GCD(num2, num1 % num2);
+    }
+    
+    // 최소공배수
+    public int LCM(int num1, int num2) {
+        return num1 * num2 / GCD(num1, num2);
+    }
+    
     public int solution(int n) {
-        int people = n;
-        int pizza = 6;
-        
-        // 최대공약수
-        while (people != 0 && pizza != 0) {
-            if (people >= pizza) {
-                people = people - pizza;
-            } else {
-                pizza = pizza - people;
-            }
-        }
-        int gcd = (people == 0) ? pizza : people;
-        
-        if (n % 6 != 0) return gcd * (n / gcd) * (6 / gcd) / 6; // 최소공배수
-        else return n / 6;
+        return LCM(n, 6) / 6;
     }
 }
