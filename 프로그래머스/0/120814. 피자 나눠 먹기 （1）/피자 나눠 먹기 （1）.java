@@ -1,5 +1,6 @@
 class Solution {
     public int solution(int n) {
-        return (int) Math.ceil(n / 7.0);
+        // return (int) Math.ceil(n / 7.0);
+        return (n + 6) / 7;
     }
 }
