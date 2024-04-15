@@ -1,10 +1,10 @@
 # [level 0] 진료 순서 정하기 - 120835 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120835) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120835?language=java) 
 
 ### 성능 요약
 
-메모리: 78.8 MB, 시간: 3.11 ms
+메모리: 70.9 MB, 시간: 0.35 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 04월 16일 01:22:29
+2024년 04월 16일 01:37:22
 
 ### 문제 설명
 
