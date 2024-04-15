@@ -1,10 +1,10 @@
 # [level 0] 모스부호 (1) - 120838 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120838) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120838?language=java) 
 
 ### 성능 요약
 
-메모리: 86.5 MB, 시간: 12.71 ms
+메모리: 77 MB, 시간: 9.30 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 04월 16일 03:11:23
+2024년 04월 16일 03:14:58
 
 ### 문제 설명
 
