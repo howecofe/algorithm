@@ -1,15 +1,12 @@
 class Solution {
     public int solution(int n) {
-        int answer = 0;
         int num = 0;
-        int mul = 1;
+        int fac = 1;
         
-        while (true) {
-            mul *= ++num;
-            if (n < mul) break;
-            else answer++;
+        while (n >= fac) {
+            fac *= ++num;
         }
         
-        return answer;
+        return num - 1;
     }
 }
