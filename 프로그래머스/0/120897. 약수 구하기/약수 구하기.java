@@ -2,22 +2,17 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int n) {
-        int len = 0;
-        for (int i = 1; i <= n; i++) {
-            if (n % i == 0) {
-                len++;
-            }
-        }
+        List<Integer> testList = new ArrayList<>();
         
-        int[] answer = new int[len];
-        int idx = 0;
         for (int i = 1; i <= n; i++) {
-            if (n % i == 0) {
-                answer[idx] = i;
-                idx++;
-            }
+            if (n % i == 0) { testList.add(i); }
         }
-        
+    
+        int[] answer = new int[testList.size()];
+        for (int i = 0; i < testList.size(); i++) {
+            answer[i] = testList.get(i);
+        }
+
         Arrays.sort(answer);
         
         return answer;
