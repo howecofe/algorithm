@@ -4,7 +4,10 @@ class Solution {
         
         for (String str1 : s1) {
             for (String str2 : s2) {
-                if (str1.equals(str2)) answer++;
+                if (str1.equals(str2)) {
+                    answer++;
+                    break;
+                }
             }
         }
         
