@@ -3,7 +3,7 @@ class Solution {
         int answer = 2;
         
         for (int i = 1; i <= n; i++) {
-            if (n / i == i && n % i == 0) {
+            if (i * i == n) {
                 answer = 1;
                 break;
             }
