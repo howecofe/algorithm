@@ -2,20 +2,12 @@ import java.util.*;
 
 class Solution {
     public int solution(String before, String after) {
-        String[] bef = before.split("");
-        String[] aft = after.split("");
+        char[] bef = before.toCharArray();
+        char[] aft = after.toCharArray();
         
         Arrays.sort(bef);
         Arrays.sort(aft);
         
-        boolean isEqual = true;
-        for (int i = 0; i < bef.length; i++) {
-            if (!bef[i].equals(aft[i])) {
-                isEqual = false;
-                break;
-            }
-        }
-        
-        return (isEqual) ? 1 : 0;
+        return (new String(bef).equals(new String(aft))) ? 1 : 0;
     }
 }
