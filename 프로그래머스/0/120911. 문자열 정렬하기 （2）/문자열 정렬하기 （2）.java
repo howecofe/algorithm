@@ -2,15 +2,9 @@ import java.util.*;
 
 class Solution {
     public String solution(String my_string) {
-        String answer = "";
-        
-        String[] words = my_string.toLowerCase().split("");
+        char[] words = my_string.toLowerCase().toCharArray();
         Arrays.sort(words);
         
-        for (String s : words) {
-            answer += s;
-        }
-        
-        return answer;
+        return new String(words);
     }
 }
