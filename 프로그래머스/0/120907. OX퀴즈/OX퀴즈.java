@@ -4,13 +4,9 @@ class Solution {
         
         for (int i = 0; i < quiz.length; i++) {
             String[] str = quiz[i].split(" ");
-            int result = Integer.parseInt(str[0]);
+            int result = Integer.parseInt(str[0]) + (Integer.parseInt(str[2]) * (str[1].equals("+") ? 1 : -1));
             
-            if (str[1].equals("+")) { result += Integer.parseInt(str[2]); }
-            else { result -= Integer.parseInt(str[2]); }
-            
-            if (result == Integer.parseInt(str[4])) { answer[i] = "O"; }
-            else { answer[i] = "X"; }
+            answer[i] = result == Integer.parseInt(str[4]) ? "O" : "X";
         }
         
         return answer;
