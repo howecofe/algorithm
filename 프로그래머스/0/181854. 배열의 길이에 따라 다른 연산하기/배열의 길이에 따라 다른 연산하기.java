@@ -1,19 +1,10 @@
-import java.util.*;
-
 class Solution {
     public int[] solution(int[] arr, int n) {
-        int[] answer = Arrays.copyOfRange(arr, 0, arr.length);
         
-        if (arr.length % 2 == 1) {
-            for (int i = 0; i < arr.length; i += 2) {
-                answer[i] += n;
-            }
-        } else {
-            for (int i = 1; i < arr.length; i += 2) {
-                answer[i] += n;
-            }
+        for (int i = arr.length % 2 == 0 ? 1 : 0; i < arr.length; i += 2) {
+            arr[i] += n;
         }
         
-        return answer;
+        return arr;
     }
 }
