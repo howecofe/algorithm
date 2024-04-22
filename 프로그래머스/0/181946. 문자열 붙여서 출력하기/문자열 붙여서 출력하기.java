@@ -6,6 +6,6 @@ public class Solution {
         String str1 = sc.next();
         String str2 = sc.next();
         
-        System.out.println(str1.replace(" ", "") + str2.replace(" ", ""));
+        System.out.println(str1.concat(str2));
     }
 }
