@@ -14,9 +14,9 @@ class Solution {
             next = Arrays.copyOf(prev, prev.length);
             for (int i = 0; i < next.length; i++) {
                 if (prev[i] >= 50 && prev[i] % 2 == 0) {
-                    next[i] = prev[i] / 2 <= 100 ? prev[i] / 2 : prev[i];
+                    next[i] = prev[i] / 2;
                 } else if (prev[i] < 50 && prev[i] % 2 == 1) {
-                    next[i] = prev[i] * 2 + 1 <= 100 ? prev[i] * 2 + 1 : prev[i];
+                    next[i] = prev[i] * 2 + 1;
                 }
             }
             
