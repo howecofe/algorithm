@@ -1,10 +1,10 @@
 # [level 0] 왼쪽 오른쪽 - 181890 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181890) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181890?language=java) 
 
 ### 성능 요약
 
-메모리: 72.8 MB, 시간: 1.38 ms
+메모리: 71.4 MB, 시간: 0.03 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 04월 24일 23:43:11
+2024년 04월 24일 23:53:47
 
 ### 문제 설명
 
