@@ -8,11 +8,7 @@ class Solution {
             else if (str.equals("y")) { y++; }
         }
         
-        if (p == 0 && y == 0) { return true; }
-        else {
-            if (p == y) { return true; }
-            else { return false;}
-        }
-    
+        if (p == y) { return true; }
+        else { return false;}
     }
 }
