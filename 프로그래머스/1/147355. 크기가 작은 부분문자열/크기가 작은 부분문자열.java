@@ -6,7 +6,8 @@ class Solution {
         
         for (int i = 0; i < t.length() - p.length() + 1; i++) {
             String subStr = t.substring(i, i + p.length());
-            if (new BigInteger(subStr).compareTo(new BigInteger(p)) <= 0) { answer++; }
+            // if (new BigInteger(subStr).compareTo(new BigInteger(p)) <= 0) { answer++; }
+            if (Long.parseLong(subStr) <= Long.parseLong(p)) { answer++; }
         }
         return answer;
     }
