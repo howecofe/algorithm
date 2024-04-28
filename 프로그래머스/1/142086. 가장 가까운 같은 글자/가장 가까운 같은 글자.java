@@ -7,11 +7,12 @@ class Solution {
         String[] str = s.split("");
         int[] answer = new int[str.length];
         for (int i = 0; i < str.length; i++) {
-            if (!map.containsKey(str[i])) {
-                answer[i] = -1;
-            } else {
-                answer[i] = i - map.get(str[i]);
-            }
+            // if (!map.containsKey(str[i])) {
+            //     answer[i] = -1;
+            // } else {
+            //     answer[i] = i - map.get(str[i]);
+            // }
+            answer[i] = i - map.getOrDefault(str[i], i + 1);
             map.put(str[i], i);
         }
         
