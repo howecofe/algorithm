@@ -35,12 +35,11 @@ class Solution {
         for (int i = 0; i < answer.length; i++) {
             q.add(score[i]);
             
-            if (q.size() > k) {
-                q.poll();
-            }
+            if (q.size() > k) { q.poll(); }
             
-            answer[i] = q.peek(); // 최소
+            answer[i] = q.peek(); // Note. 우선순위 큐는 작은 값이 우선순위가 높다.
         }
         return answer;
     }
 }
+
