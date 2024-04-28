@@ -5,11 +5,9 @@ class Solution {
         int answer = 0;
         
         Arrays.sort(score);
-        int boxCnt = score.length / m;
-        int[] arr = Arrays.copyOfRange(score, score.length - boxCnt * m, score.length);
         
-        for (int i = 0; i < arr.length; i += m) {
-            answer += arr[i] * m;
+        for (int i = score.length - m; i >= 0; i -= m) {
+            answer += score[i] * m;
         }
         
         return answer;
