@@ -1,7 +1,5 @@
 class Solution {
-    public int[] solution(int[] lottos, int[] win_nums) {
-        int[] answer = new int[2];
-        
+    public int[] solution(int[] lottos, int[] win_nums) {        
         int sameCnt = 0;
         int zeroCnt = 0;
         for (int lotto : lottos) {
