@@ -2,39 +2,27 @@ import java.util.*;
 
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-        int answer = 0;
-        Arrays.sort(lost);
-        Arrays.sort(reserve);
+        int answer = n;
+        int[] students = new int[n];
         
-        for (int i = 0; i < reserve.length; i++) {
-            for (int j = 0; j < lost.length; j++) {
-                if (reserve[i] == lost[j]) {
-                    answer++;
-                    reserve[i] = -1;
-                    lost[j] = -1;
-                    break;
+        // 잃어버린 학생은 -1, 여벌있는 학생은 +1, 결과적으로 잃어버렸지만 여벌있는 학생은 0이 됨.
+        for (int l : lost) { students[l - 1]--; }
+        for (int r : reserve) { students[r - 1]++; }
+        
+        for (int i = 0; i < students.length; i++) {
+            if (students[i] == -1) {
+                if (i - 1 >= 0 && students[i - 1] == 1) {
+                    students[i]++;
+                    students[i - 1]--;
+                } else if (i + 1 < students.length && students[i + 1] == 1) {
+                    students[i]++;
+                    students[i + 1]--;
+                } else {
+                    answer--;
                 }
             }
         }
         
-        for (int i = 0; i < reserve.length; i++) {
-            for (int j = 0; j < lost.length; j++) {
-                if (reserve[i] != -1 && lost[j] != -1) {
-                    if (lost[j] == reserve[i] - 1) {
-                        answer++;
-                        lost[j] = -1;
-                        break;
-                    } else if (lost[j] == reserve[i] + 1) {
-                        answer++;
-                        lost[j] = -1;
-                        break;
-                    }
-                }
-            }
-            
-            if (answer > lost.length) { break; }
-        }
-        
-        return n - lost.length + answer;
+        return answer;
     }
 }
