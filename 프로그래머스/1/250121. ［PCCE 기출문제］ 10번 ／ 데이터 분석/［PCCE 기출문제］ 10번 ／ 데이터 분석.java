@@ -11,20 +11,26 @@ class Solution {
             if (d[selected] < val_ext) { list.add(d); }                
         }
         
-        int[] sortedArr = new int[list.size()];
-        for (int i = 0; i < sortedArr.length; i++) {
-            sortedArr[i] = list.get(i)[sorted];
-        }
-        Arrays.sort(sortedArr);
+//         int[] sortedArr = new int[list.size()];
+//         for (int i = 0; i < sortedArr.length; i++) {
+//             sortedArr[i] = list.get(i)[sorted];
+//         }
+//         Arrays.sort(sortedArr);
         
+//         int[][] answer = new int[list.size()][data[0].length];
+//         for (int i = 0; i < sortedArr.length; i++) {
+//             for (int j = 0; j < list.size(); j++) {
+//                 if (sortedArr[i] == list.get(j)[sorted]) {
+//                     answer[i] = list.get(j);
+//                     break;
+//                 }
+//             }
+//         }
+        
+        Collections.sort(list, (o1, o2) -> o1[sorted] - o2[sorted]);
         int[][] answer = new int[list.size()][data[0].length];
-        for (int i = 0; i < sortedArr.length; i++) {
-            for (int j = 0; j < list.size(); j++) {
-                if (sortedArr[i] == list.get(j)[sorted]) {
-                    answer[i] = list.get(j);
-                    break;
-                }
-            }
+        for (int i = 0; i < list.size(); i++) {
+            answer[i] = list.get(i);
         }
         
         return answer;
