@@ -1,0 +1,30 @@
+class Solution {
+    public String solution(String new_id) {
+        new_id = new_id.toLowerCase();
+        
+        StringBuilder sb = new StringBuilder();
+        for (char c : new_id.toCharArray()) {
+            if ('a' <= c && c <= 'z' || '0' <= c && c <= '9' || c == '-' || c == '_' || c == '.') { sb.append(c); }
+        }
+        new_id = sb.toString();
+        
+        // 정규표현식에서 특수문자는 \. 이런식으로 나타내야 하는데, Java의 문자열에서는 \을 Escape 문자로 인식하기 때문에 \\.으로 사용해야 한다.
+        new_id = new_id.replaceAll("\\.{2,}", "."); 
+        
+        if (new_id.indexOf(".") == 0) { new_id = new_id.substring(1); }
+        if (!new_id.isEmpty() && new_id.lastIndexOf(".") == new_id.length() - 1) {
+            new_id = new_id.substring(0, new_id.length() - 1);
+        }
+        
+        if (new_id.isEmpty()) { new_id = "a"; }
+        if (new_id.length() > 15) { new_id = new_id.substring(0, 15); }
+        if (!new_id.isEmpty() && new_id.lastIndexOf(".") == new_id.length() - 1) {
+            new_id = new_id.substring(0, new_id.length() - 1);
+        }
+        if (new_id.length() <= 2) {
+            new_id += String.valueOf(new_id.charAt(new_id.length() - 1)).repeat(3 - new_id.length());
+        }
+        
+        return new_id;
+    }
+}
