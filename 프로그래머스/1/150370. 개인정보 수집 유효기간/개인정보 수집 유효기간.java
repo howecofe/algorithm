@@ -12,13 +12,13 @@ class Solution {
         for (String t : terms) {
             termsMap.put(t.split(" ")[0], Integer.parseInt(t.split(" ")[1]));
         }
-        
+
         for (int i = 0; i < privacies.length; i++) {
             String[] date = privacies[i].split(" ")[0].split("\\.");
             String t = privacies[i].split(" ")[1];
             
-            int validYear = Integer.parseInt(date[0]) + (Integer.parseInt(date[1]) + termsMap.get(t)) / 12;
-            int validMonth = (Integer.parseInt(date[1]) + termsMap.get(t)) % 12;
+            int validYear = Integer.parseInt(date[0]) + (Integer.parseInt(date[1]) + termsMap.get(t) - 1) / 12;
+            int validMonth = ((Integer.parseInt(date[1]) + termsMap.get(t)) % 12 == 0) ? 12 : ((Integer.parseInt(date[1]) + termsMap.get(t)) % 12);
             int validDay = Integer.parseInt(date[2]) - 1;
             
             if (validDay == 0) {
