@@ -1,24 +1,24 @@
 import java.util.*;
 
 class Solution {
-    List<int[]> list;
-    int x;
-    int y;
+    List<int[]> obstacles;
+    int currX;
+    int currY;
     
     public Solution() {
-        this.x = 0;
-        this.y = 0;
-        this.list = new ArrayList<>();
+        this.currX = 0;
+        this.currY = 0;
+        this.obstacles = new ArrayList<>();
     }
     
     public int[] solution(String[] park, String[] routes) {      
         for (int i = 0; i < park.length; i++) {
             for (int j = 0; j < park[i].length(); j++) {
                 if (park[i].charAt(j) == 'S') {
-                    x = i;
-                    y = j;
+                    currX = i;
+                    currY = j;
                 } else if (park[i].charAt(j) == 'X') {
-                    list.add(new int[]{i, j});
+                    obstacles.add(new int[]{i, j});
                 }
             }
         }
@@ -27,45 +27,37 @@ class Solution {
         int w = park[0].length();
         
         for (String route : routes) {
-            String[] r = route.split(" ");
-            String op = r[0];
-            int moveCnt = Integer.parseInt(r[1]);
-            int tmpX = x, tmpY = y;
+            String[] routeArr = route.split(" ");
+            String direction = routeArr[0];
+            int distance = Integer.parseInt(routeArr[1]);
+            int newX = currX, newY = currY;
             
-            if (op.equals("E")) {
-                tmpY = y + moveCnt;
-            } else if (op.equals("W")) {
-                tmpY = y - moveCnt;
-            } else if (op.equals("S")) {
-                tmpX = x + moveCnt;
+            if (direction.equals("E")) {
+                newY += distance;
+            } else if (direction.equals("W")) {
+                newY -= distance;
+            } else if (direction.equals("S")) {
+                newX += distance;
             } else {
-                tmpX = x - moveCnt;
+                newX -= distance;
             }
             
-            if (tmpY < 0 || tmpY >= w || tmpX < 0 || tmpX >= h) { continue; }
+            if (newY < 0 || newY >= w || newX < 0 || newX >= h) { continue; }
             
-            if (!hasObstacle(tmpX, tmpY)) {
-                x = tmpX;
-                y = tmpY;
+            if (!hasObstacle(currX, currY, newX, newY)) {
+                currX = newX;
+                currY = newY;
             }
         }
         
-        return new int[]{x, y};
+        return new int[]{currX, currY};
     }
     
-    private boolean hasObstacle(int tmpX, int tmpY) {
-        if (x != tmpX) {
-            for (int i = Math.min(x, tmpX); i <= Math.max(x, tmpX); i++) {
-                for (int[] X : list) {
-                    if (X[0] == i && X[1] == y) { return true; }
-                }
-            }
-        }
-        
-        if (y != tmpY) {
-            for (int i = Math.min(y, tmpY); i <= Math.max(y, tmpY); i++) {
-                for (int[] X : list) {
-                    if (X[0] == x && X[1] == i) { return true; }
+    private boolean hasObstacle(int currX, int currY, int newX, int newY) {
+        for (int i = Math.min(currX, newX); i <= Math.max(currX, newX); i++) {
+            for (int j = Math.min(currY, newY); j <= Math.max(currY, newY); j++) {
+                for (int[] obs : obstacles) {
+                    if (obs[0] == i && obs[1] == j) { return true; }
                 }
             }
         }
