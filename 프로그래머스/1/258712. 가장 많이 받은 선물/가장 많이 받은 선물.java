@@ -7,35 +7,23 @@ class Solution {
             idx.put(friends[i], i);
         }
         
-        // -1이면 주고받은 기록이 없는 상태
-        int[][] cntArr = new int[friends.length][friends.length];
-        for (int i = 0; i < cntArr.length; i++) {
-            Arrays.fill(cntArr[i], -1);
-        }
-        
         // 2차원 배열에 선물 기록
+        int[][] record = new int[friends.length][friends.length];
         for (String gift : gifts) {
             String[] part = gift.split(" ");
             String giver = part[0];
             String taker = part[1];
             
-            if (cntArr[idx.get(giver)][idx.get(taker)] == -1) {
-                cntArr[idx.get(giver)][idx.get(taker)] = 1;
-                cntArr[idx.get(taker)][idx.get(giver)] = 0;
-            } else {
-                cntArr[idx.get(giver)][idx.get(taker)]++;
-            }
+            record[idx.get(giver)][idx.get(taker)]++;
         }
         
         // 선물 지수
         Map<String, Integer> giftIdx = new HashMap<>();
-        for (int i = 0; i < cntArr.length; i++) {
+        for (int i = 0; i < record.length; i++) {
             int giveCnt = 0, takeCnt = 0;
-            for (int j = 0; j < cntArr[i].length; j++) { 
-                if (cntArr[i][j] != -1) {
-                    giveCnt += cntArr[i][j];
-                    takeCnt += cntArr[j][i];
-                }  
+            for (int j = 0; j < record[i].length; j++) { 
+                giveCnt += record[i][j];
+                takeCnt += record[j][i];
             }
             
             giftIdx.put(friends[i], giveCnt - takeCnt);
@@ -43,11 +31,11 @@ class Solution {
         
         int[] answer = new int[friends.length];
         
-        for (int i = 0; i < cntArr.length; i++) {
-            for (int j = i + 1; j < cntArr[i].length; j++) {
-                if (cntArr[i][j] > cntArr[j][i]) {
+        for (int i = 0; i < record.length; i++) {
+            for (int j = i + 1; j < record[i].length; j++) {
+                if (record[i][j] > record[j][i]) {
                     answer[i]++;
-                } else if (cntArr[i][j] < cntArr[j][i]) {
+                } else if (record[i][j] < record[j][i]) {
                     answer[j]++;
                 } else {
                     if (giftIdx.get(friends[i]) > giftIdx.get(friends[j])) {
