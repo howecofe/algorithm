@@ -1,18 +1,15 @@
 class Solution {
     public int solution(int n, int m, int[] section) {
-        int answer = 0;
+        int cnt = 0;
         int painted = 0;
         
-        while (section[section.length - 1] > painted) {
-            answer++;
-            for (int num : section) {
-                if (num > painted) {
-                    painted = num + m - 1;
-                    break;
-                }
+        for (int num : section) {
+            if (painted <= num) {
+                painted = num + m;
+                cnt++;
             }
-        }        
+        }
         
-        return answer;
+        return cnt;
     }
 }
