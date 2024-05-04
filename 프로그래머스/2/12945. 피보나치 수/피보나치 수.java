@@ -4,12 +4,12 @@ class Solution {
         int n3 = 0;
 
         for (int i = 2; i <= n; i++) {
-            n3 = n1 + n2;
-            n1 = n2 % 1234567;
-            n2 = n3 % 1234567;
+            n3 = (n1 + n2) % 1234567;
+            n1 = n2;
+            n2 = n3;
         }
         
-        return n3 % 1234567;
+        return n3;
     }
     
     // private int fibonacci(int n) {
