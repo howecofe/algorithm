@@ -13,10 +13,13 @@ class Solution {
         int days = 0;
         
         while (!q.isEmpty()) {
-            // days += (100 - progresses[idx]) % speeds[idx] == 0 ?
-            //     (100 - progresses[idx]) / speeds[idx]
-            //     : (100 - progresses[idx]) / speeds[idx] + 1;
-            days = (int) Math.ceil((100 - progresses[idx]) / speeds[idx]);
+            double progress = progresses[idx];
+            double speed = speeds[idx];
+            
+            // days += (100 - progress) % speed == 0 ?
+            //     (100 - progress) / speed
+            //     : (100 - progress) / speed + 1;
+            days = (int) Math.ceil((100 - progress) / speed);
             
             int completedTasks = 0;
             while (!q.isEmpty() && q.peek() + speeds[idx] * days >= 100) {
