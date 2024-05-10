@@ -3,7 +3,7 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
         List<Integer> list = new ArrayList<>();
-        Queue<Integer> q = new LinkedList<>();
+        LinkedList<Integer> q = new LinkedList<>();
         
         for (int i = 0; i < progresses.length; i++) {
             q.offer(progresses[i]);
@@ -13,13 +13,13 @@ class Solution {
         int days = 0;
         
         while (!q.isEmpty()) {
-            double progress = progresses[idx];
-            double speed = speeds[idx];
+            int progress = progresses[idx];
+            int speed = speeds[idx];
             
-            // days += (100 - progress) % speed == 0 ?
-            //     (100 - progress) / speed
-            //     : (100 - progress) / speed + 1;
-            days = (int) Math.ceil((100 - progress) / speed);
+            days = (100 - progress) % speed == 0 ?
+                (100 - progress) / speed
+                : (100 - progress) / speed + 1;
+            // days = (int) Math.ceil((double)(100 - progress) / speed);
             
             int completedTasks = 0;
             while (!q.isEmpty() && q.peek() + speeds[idx] * days >= 100) {
