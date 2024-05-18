@@ -1,23 +1,29 @@
 import java.util.*;
 
 class Solution {
-    static Map<String, Integer> map = new HashMap<>();
-    static int order = 1;
+    static List<String> list = new ArrayList<>();
+    static char[] alpha = {'A', 'E', 'I', 'O', 'U'};
+    static int answer = 0;
     
     public int solution(String word) {
-        char[] alpha = {'A', 'E', 'I', 'O', 'U'};
+        dfs(word, "", 0);
+        answer = list.indexOf(word);
         
-        dfs(alpha, "", 1);
-        
-        return map.get(word);
+        return answer;
     }
     
-    private static void dfs(char[] alpha, String tmp, int depth) {
+    private static void dfs(String word, String tmp, int depth) {
         if (depth > alpha.length) { return; }
         
+        list.add(tmp);
+        
+        if (list.contains(word)) {
+            answer = list.indexOf(word);
+            return;
+        }
+        
         for (int i = 0; i < alpha.length; i++) {
-            map.put(tmp + alpha[i], order++);
-            dfs(alpha, tmp + alpha[i], depth + 1);
+            dfs(word, tmp + alpha[i], depth + 1);
         }
     }
 }
