@@ -5,14 +5,11 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String origin = sc.next();
 
-        StringBuilder sb = new StringBuilder();
-        for (String s : origin.split("")) {
-            sb.insert(0, s);
-        }
+        StringBuilder sb = new StringBuilder(origin);
+        sb.reverse();
 
         int answer = origin.equals(sb.toString()) ? 1 : 0;
 
         System.out.println(answer);
     }
 }
-
