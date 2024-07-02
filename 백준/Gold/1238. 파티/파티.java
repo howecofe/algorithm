@@ -2,85 +2,99 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
-class Main {
-    static class Node {
-        int v;
-        int c;
-        Node(int v, int c) {
-            this.v = v;
-            this.c = c;
-        }
-    }
-    static int n, m, x, max;
-    static final int INF = 1000 * 1000;
-    static List<List<Node>> adjList = new ArrayList<>();
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+public class Main {
+	
+	static int N, M, X, max;
+	static final int INF = Integer.MAX_VALUE;
+	static List<List<Node>> goList = new ArrayList<>(); // X로 가는
+	static List<List<Node>> backList = new ArrayList<>(); // X에서 집으로 되돌아 오는
+	static PriorityQueue<Node> pq = new PriorityQueue<>((n1, n2) -> n1.t - n2.t);
+	static int[] goCost;
+	static int[] backCost;
+	static boolean[] visit;
+	
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		X = Integer.parseInt(st.nextToken());
+		
+		for (int i = 0; i <= N; i++) {
+			goList.add(new ArrayList<>());
+			backList.add(new ArrayList<>());
+		}
+		
+		goCost = new int[N + 1];
+		backCost = new int[N + 1];
+		visit = new boolean[N + 1];
+		
+		for (int i = 0; i < M; i++) { // 간선
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int t = Integer.parseInt(st.nextToken());
+			
+			goList.get(a).add(new Node(b, t));
+			// a -> b 가는 길 중에 분명히 집 -> X로 가는 최단 경로가 존재할 것이고, 역으로 뒤집으면 그 길이 X -> 집. 다익스트라로 처리
+			backList.get(b).add(new Node(a, t));
+		}
+		
+		// 풀이
+		max = Integer.MIN_VALUE;
+		dijkstra(goList, goCost);
+		dijkstra(backList, backCost);
+		
+		for (int i = 1; i <= N; i++) {
+			max = Math.max(max, goCost[i] + backCost[i]);
+		}
+		
+		bw.write(max + "");
 
-        // 입력
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        x = Integer.parseInt(st.nextToken());
+		br.close();
+		bw.flush();
+		bw.close();
 
-        // 인접리스트 정점 입력
-        for (int i = 0; i <= n; i++) {
-            adjList.add(new ArrayList<>()); // 0 dummy
-        }
+	}
+	
+	static void dijkstra(List<List<Node>> list, int[] cost) {
+		// cost, visit 초기화
+		Arrays.fill(cost, INF);
+		Arrays.fill(visit, false);
+		
+		// 시작점 X
+		cost[X] = 0;
+		pq.offer(new Node(X, 0));
+		
+		while (!pq.isEmpty()) {
+			Node node = pq.poll();
+			if (visit[node.v]) continue;
+			visit[node.v] = true;
+			
+			for (Node n : list.get(node.v)) {
+				if (visit[n.v]) continue;
+				
+				cost[n.v] = Math.min(cost[n.v], node.t + n.t);
+				pq.offer(new Node(n.v, cost[n.v]));
+			}
+		}
+	}
+	
+	static class Node {
+		int v; // 정점 마을 (집)
+		int t; // 시간
+		
+		Node(int v, int t) {
+			this.v = v;
+			this.t = t;
+		}
+	}
 
-        // 인접리스트 간선 입력
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(br.readLine());
-            int v1 = Integer.parseInt(st.nextToken());
-            int v2 = Integer.parseInt(st.nextToken());
-            int c = Integer.parseInt(st.nextToken());
-            adjList.get(v1).add(new Node(v2, c));
-        }
-
-        // 풀이: 다익스트라
-        for (int i = 1; i <= n; i++) {
-            max = Math.max(max, dijkstra(i, x) + dijkstra(x, i));
-        }
-
-        // 출력
-        bw.write(max + "");
-
-        br.close();
-        bw.flush();
-        bw.close();
-    }
-
-    static int dijkstra(int start, int end) {
-        int[] cost = new int[n + 1]; // 0 dummy
-        boolean[] visit = new boolean[n + 1]; // 0 dummy
-        PriorityQueue<Node> pq = new PriorityQueue<>((n1, n2) -> n1.c - n2.c);
-
-        Arrays.fill(cost, INF);
-        cost[start] = 0;
-        pq.offer(new Node(start, 0));
-
-        while (!pq.isEmpty()) {
-            Node node = pq.poll();
-
-            // 방문 여부 확인
-            if (visit[node.v]) continue;
-            visit[node.v] = true;
-
-            // 목적지 도달 여부 확인
-            if (node.v == end) break;
-
-            // 인접 정점 최소 비용 갱신
-            for (Node n : adjList.get(node.v)) {
-                if (visit[n.v]) continue;
-                // 최소 비용 갱신 후 큐에 넣기
-                cost[n.v] = Math.min(cost[n.v], node.c + n.c);
-                pq.offer(new Node(n.v, cost[n.v]));
-            }
-        }
-
-        return cost[end];
-    }
 }
