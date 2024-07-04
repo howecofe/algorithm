@@ -29,7 +29,7 @@ public class Main {
      
         // 풀이
         min = Integer.MAX_VALUE;
-        subset(0); // 첫 번째 재료부터 시작
+        subset(0, 0); // 첫 번째 재료부터 시작, ....0000 (아무것도 선택되지 않은 상태의 bitmasking)
   
 
         // 출력
@@ -40,7 +40,7 @@ public class Main {
         bw.close();
     }
 
-    static void subset(int srcIdx) {
+    static void subset(int srcIdx, int mask) {
     	// 기저조건
     	if (srcIdx == N) {
     		// 부분집합의 한 경우가 만들어진 상태
@@ -51,7 +51,7 @@ public class Main {
     		int cnt = 0;
     		
     		for (int i = 0; i < N; i++) {
-    			if (select[i]) {
+    			if ((mask & (1 << i)) != 0) { // mask의 bit 표현 중 i번째가 1인지 0인지 확인
     				sin *= src[i][0];
     				ssn += src[i][1];
     				cnt++;
@@ -65,10 +65,8 @@ public class Main {
     		return;
     	}
     	
-    	select[srcIdx] = true;
-    	subset(srcIdx + 1);
+    	subset(srcIdx + 1, mask | 1 << srcIdx); // 현재 재료 선택
     	
-    	select[srcIdx] = false;
-    	subset(srcIdx + 1);
+    	subset(srcIdx + 1, mask); // 현재 재료 (srcIdx) 선택 X
     }
 }
