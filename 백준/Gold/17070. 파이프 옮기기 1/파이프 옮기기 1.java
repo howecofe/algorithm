@@ -1,102 +1,63 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.*;
+import java.util.StringTokenizer;
 
-class Main {
-    static int N, result;
-    static int[][] matrix;
-    static class Pipe {
-        int y, x, type;
-        Pipe(int y, int x, int type) {
-            this.y = y;
-            this.x = x;
-            this.type = type;
-        }
-    }
+public class Main {
 
-    public static void main(String[] args) throws Exception {
+	static int N, cnt;
+	static int[][] map;
+	// 이동규칙이 담긴 delta
+	static int[][][] delta = { // 0: 현재 이동방향, 1: y 변화량, 2: x 변화량
+			{{1, 1}, {0, 1}, {1, 0}}, // 대각선 : 대각선, 가로, 세로
+			{{1, 1}, {0, 1}, {0, 0}}, // 가로 : 대각선, 가로, 세로는 dummy
+			{{1, 1}, {0, 0}, {1, 0}} // 세로 : 대각선, 가로는 dummy, 세로
+	};
+	
+	public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		N = Integer.parseInt(br.readLine());
+		
+		map = new int[N + 1][N + 1]; // 0: dummy
+		for(int i = 1; i <= N; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			for (int j = 1; j <= N; j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+		
+		// 풀이 Dfs()
+		dfs(1, 2, 1);
 
-        // 입력
-        N = Integer.parseInt(br.readLine());
-        matrix = new int[N + 1][N + 1];
-        for (int i = 1; i <= N; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 1; j <= N; j++) {
-                matrix[i][j] = Integer.parseInt(st.nextToken());
-            }
-        }
-
-        // 풀이
-        bfs();
-
-        // 출력
-        bw.write(result + "");
-
-        br.close();
-        bw.flush();
-        bw.close();
-    }
-
-    static void bfs() {
-        Queue<Pipe> q = new ArrayDeque<>();
-        q.offer(new Pipe(1, 2, 0)); // type : 0 가로 1 세로 2 대각선
-
-        while (!q.isEmpty()) {
-            Pipe pi = q.poll();
-
-            if (pi.y == N && pi.x == N) {
-                result++;
-                continue;
-            }
-
-            if (pi.type == 0) { // 가로
-                // 가로
-                if (check(pi.y, pi.x + 1) && matrix[pi.y][pi.x + 1] == 0) {
-                    q.offer(new Pipe(pi.y, pi.x + 1, 0));
-                }
-
-                // 대각선
-                if (check(pi.y + 1, pi.x + 1) && matrix[pi.y][pi.x + 1] == 0 && matrix[pi.y + 1][pi.x + 1] == 0 && matrix[pi.y + 1][pi.x] == 0) {
-                    q.offer(new Pipe(pi.y + 1, pi.x + 1, 2));
-                }
-
-            } else if (pi.type == 1) { // 세로
-                // 세로
-                if (check(pi.y + 1, pi.x) && matrix[pi.y + 1][pi.x] == 0) {
-                    q.offer(new Pipe(pi.y + 1, pi.x, 1));
-                }
-
-                // 대각선
-                if (check(pi.y + 1, pi.x + 1) && matrix[pi.y][pi.x + 1] == 0 && matrix[pi.y + 1][pi.x + 1] == 0 && matrix[pi.y + 1][pi.x] == 0) {
-                    q.offer(new Pipe(pi.y + 1, pi.x + 1, 2));
-                }
-
-            } else if (pi.type == 2) { // 대각선
-                // 가로
-                if (check(pi.y, pi.x + 1) && matrix[pi.y][pi.x + 1] == 0) {
-                    q.offer(new Pipe(pi.y, pi.x + 1, 0));
-                }
-
-                // 세로
-                if (check(pi.y + 1, pi.x) && matrix[pi.y + 1][pi.x] == 0) {
-                    q.offer(new Pipe(pi.y + 1, pi.x, 1));
-                }
-
-                // 대각선
-                if (check(pi.y + 1, pi.x + 1) && matrix[pi.y][pi.x + 1] == 0 && matrix[pi.y + 1][pi.x + 1] == 0 && matrix[pi.y + 1][pi.x] == 0) {
-                    q.offer(new Pipe(pi.y + 1, pi.x + 1, 2));
-                }
-            }
-        }
-    }
-
-    static boolean check(int y, int x) {
-        if (y < 1 || x < 1 || y > N || x > N) return false;
-        return true;
-    }
+		System.out.println(cnt);
+	}
+	
+	// visit? 필요 X
+	// 문제가 모든 좌표를 한 번만 방문하는 문제 X
+	// 모든 가짓수를 따지는 문제 <- 어느 y, x 에 도달하기 이전에 다른 좌표를 거쳐서 올 수 있다.
+	
+	static void dfs(int y, int x, int d) {
+		// 기저조건
+		if (y == N && x == N) {
+			cnt++;
+			return;
+		}
+		
+		// 규칙이 적용된 delta 를 이용해서 계속 가 본다.
+		for (int i = 0; i < 3; i++) {
+			int ny = y + delta[d][i][0];
+			int nx = x + delta[d][i][1];
+			
+			// dummy check
+			if (ny == y && nx == x) continue;
+			
+			// 경계 체크 및 벽 체크
+			if (ny > N || nx > N || map[ny][nx] == 1) continue; // 우하로 계속 증가하므로 0보다 작은 경계는 체크할 필요 없다.
+			
+			// 대각선일 경우 스치는 두 부분도 체크
+			if (i == 0 && (map[ny][nx - 1] == 1 || map[ny - 1][nx] == 1)) continue;
+			
+			dfs(ny, nx, i);
+		}
+	}
 
 }
