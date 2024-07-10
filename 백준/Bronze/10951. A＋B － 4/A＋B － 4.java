@@ -1,21 +1,21 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
+class Main {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        String s = br.readLine();
-        
-        while (s != null) {
-            String[] nums = s.split(" ");
-            int a = Integer.parseInt(nums[0]);
-            int b = Integer.parseInt(nums[1]);
-            int sum = a + b;
+        String s;
 
-            bw.write(sum + "\n");
-            s = br.readLine();
+        while ((s = br.readLine()) != null) {
+            String[] arr = s.split(" ");
+            int res = Integer.parseInt(arr[0]) + Integer.parseInt(arr[1]);
+            bw.write(res + "\n");
         }
 
+        br.close();
         bw.flush();
         bw.close();
     }
