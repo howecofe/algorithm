@@ -1,15 +1,9 @@
-SELECT
-    SUB.FLAVOR
-FROM
-    (SELECT FLAVOR, SUM(TOTAL_ORDER) AS TOTAL_ORDER
-    FROM FIRST_HALF
-    GROUP BY FLAVOR
-    UNION
-    SELECT FLAVOR, SUM(TOTAL_ORDER) AS TOTAL_ORDER
-    FROM JULY
-    GROUP BY FLAVOR) AS SUB
-GROUP BY
-    SUB.FLAVOR
-ORDER BY
-    SUM(SUB.TOTAL_ORDER) DESC
-LIMIT 3;
+select a.FLAVOR
+from (
+    select * from FIRST_HALF
+    union all -- 중복 포함
+    select * from JULY
+) as a
+group by FLAVOR -- 맛별로 그룹핑
+order by sum(TOTAL_ORDER) desc -- 맛별 주문량 내림차순
+limit 3; -- 상위 3개
