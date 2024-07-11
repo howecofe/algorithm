@@ -1,16 +1,28 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int len = sc.nextInt();
-        String[] nums = sc.next().split("");
-        int sum = 0;
 
-        for (int i = 0; i < len; i++) {
-            sum += Integer.parseInt(nums[i]);
-        }
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		br.readLine(); // N
+		
+		char[] arr = br.readLine().toCharArray();
+		
+		int sum = 0;
+		for (char c : arr) {
+			sum += c - '0';
+		}
+		
+		bw.write(sum + "");
+		
+		br.close();
+		bw.flush();
+		bw.close();
+	}
 
-        System.out.println(sum);
-    }
 }
