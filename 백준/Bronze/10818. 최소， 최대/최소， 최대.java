@@ -1,18 +1,31 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        int len = sc.nextInt();
-        long[] arr = new long[len];
+	static int N;
+	static int min = 1000001;
+	static int max = -1000000 - 1;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		N = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < N; i++) {
+			int n = Integer.parseInt(st.nextToken());
+			min = Math.min(min, n);
+			max = Math.max(max, n);
+		}
+		
+		bw.write(min + " " + max);
+		
+		br.close();
+		bw.flush();
+		bw.close();
+	}
 
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = sc.nextLong();
-        }
-
-        Arrays.sort(arr);
-
-        System.out.println(arr[0] + " " + arr[arr.length - 1]);
-    }
 }
