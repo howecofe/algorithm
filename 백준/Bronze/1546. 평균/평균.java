@@ -1,21 +1,34 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int max = 0;
-        double avg = 0;
-        
-        for (int i = 0; i < n; i++) {
-            int score = sc.nextInt();
-            avg += score;
-            if (max < score) max = score;
-        }
 
-        avg /= n;
-        avg *= 100 / (double)max;
+	static int N, sum;
+	static double avg;
+	static int max = -1;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		
+		N = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		for (int i = 0; i < N; i++) {
+			int score = Integer.parseInt(st.nextToken());
+			sum += score;
+			max = Math.max(max, score);
+		}
+		
+		avg = (double)sum / max * 100 / N;
+		
+		bw.write(avg + "");
+		
+		br.close();
+		bw.flush();
+		bw.close();
+	}
 
-        System.out.println(avg);
-    }
 }
