@@ -1,29 +1,45 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        int n = sc.nextInt();
-        int m = sc.nextInt();
-        int[] arr = new int[n];
-        for (int i = 0; i < arr.length; i++) { arr[i] = i + 1; }
+	static int N, M;
+	static int[] arr;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		// 입력
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		
+		// 풀이
+		arr = new int[N + 1]; // 0: dummy
+		for (int i = 1; i <= N; i++) arr[i] = i;
+		
+		for (int i = 0; i < M; i++) {
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			
+			// a~b 위치 요소 저장
+			List<Integer> tmp = new ArrayList<>();
+			for (int j = a; j <= b; j++) tmp.add(arr[j]);
+			
+			// 역순으로 할당
+			int idx = tmp.size() - 1;
+			for (int j = a; j <= b; j++) arr[j] = tmp.get(idx--);
+		}
+		
+		// 출력
+		for (int i = 1; i <= N; i++) {
+			System.out.print(arr[i] + " ");
+		}
+		
+		br.close();
+	}
 
-        for (int i = 0; i < m; i++) {
-            int left = sc.nextInt() - 1;
-            int right = sc.nextInt() - 1;
-            List<Integer> list = new ArrayList<>();
-            for (int j = right; j >= left; j--) { list.add(arr[j]); }
-
-            int idx = 0;
-            for (int j = left; j <= right; j++) { arr[j] = list.get(idx++); }
-        }
-        
-        String answer = "";
-        for (int num : arr) {
-            answer = answer + num + " ";
-        }
-
-        System.out.println(answer.trim());
-    }
 }
