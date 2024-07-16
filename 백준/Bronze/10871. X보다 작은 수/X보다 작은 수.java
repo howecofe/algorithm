@@ -1,18 +1,29 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        int len = sc.nextInt();
-        int target = sc.nextInt();
-        String answer = "";
+	static int N, X, cnt;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		// 입력
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		X = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < len; i++) {
-            int n = sc.nextInt();
-            if (n < target) answer = answer + n + " ";
-        }
+		// 풀이
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < N; i++) {
+			int num = Integer.parseInt(st.nextToken());
+			
+			if (num < X) System.out.print(num + " ");
+		}
+		
+		br.close();
+	}
 
-        System.out.println(answer.trim());
-    }
 }
