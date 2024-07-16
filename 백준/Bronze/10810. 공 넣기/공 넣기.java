@@ -1,26 +1,38 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int[] arr = new int[sc.nextInt() + 1];
-        int cnt = sc.nextInt();
 
-        for (int i = 0; i < cnt; i++) {
-            int start = sc.nextInt();
-            int end = sc.nextInt();
-            int ball = sc.nextInt();
+	static int N, M;
+	static int[] ball;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		// 입력
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		ball = new int[N + 1]; // 0: dummy
+		
+		// 풀이
+		for (int i = 0; i < M; i++) {
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int n = Integer.parseInt(st.nextToken());
+			
+			for (int j = a; j <= b; j++) {
+				ball[j] = n;
+			}
+		}
+		
+		// 출력
+		for (int i = 1; i <= N; i++) {
+			System.out.print(ball[i] + " ");
+		}
+		
+		br.close();
+	}
 
-            for (int j = start; j <= end; j++) {
-                arr[j] = ball;
-            }
-        }
-
-        String answer = "";
-        for (int i = 1; i < arr.length; i++) {
-            answer = answer + arr[i] + " ";
-        }
-
-        System.out.println(answer.trim());
-    }
 }
