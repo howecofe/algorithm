@@ -1,27 +1,42 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        int bucketCnt = sc.nextInt();
-        int changeCnt = sc.nextInt();
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 1; i <= bucketCnt; i++) { map.put(i, i); }
+	static int N, M;
+	static int[] arr;
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		// 입력
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		
+		// 풀이
+		arr = new int[N + 1]; // 0: dummy
+		for (int i = 1; i <= N; i++) arr[i] = i;
+		
+		for (int i = 0; i < M; i++) {
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			
+			// swap
+			int tmp = arr[a];
+			arr[a] = arr[b];
+			arr[b] = tmp;
+		}
+		
+		// 출력
+		for (int i = 1; i <= N; i++) {
+			System.out.print(arr[i] + " ");
+		}
+		
+		br.close();
+	}
 
-        for (int i = 0; i < changeCnt; i++) {
-            int n1 = sc.nextInt();
-            int n2 = sc.nextInt();
-            int tmp = map.get(n1);
-            map.put(n1, map.get(n2));
-            map.put(n2, tmp);
-        }
-
-        String answer = "";
-        for (int i = 1; i <= bucketCnt; i++) {
-            answer = answer + map.get(i) + " ";
-        }
-
-        System.out.println(answer.trim());
-    }
 }
