@@ -1,18 +1,39 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.StringTokenizer;
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int k = sc.nextInt();
-        List<Integer> list = new ArrayList<>();
+class Main {
+    static int N, k;
+    static int[] arr;
+    static int[] size = new int[6];
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        for (int i = 0; i < n; i++) {
-            list.add(sc.nextInt());
+        // 입력
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+
+        // 풀이
+        arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        list.sort(Comparator.reverseOrder());
+        Arrays.sort(arr);
 
-        System.out.println(list.get(k - 1));
+        // 출력
+        bw.write(arr[N - k] + "");
+
+        br.close();
+        bw.flush();
+        bw.close();
     }
 }
