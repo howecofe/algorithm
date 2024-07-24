@@ -1,18 +1,23 @@
 import java.util.*;
 
-public class Solution {
+class Solution {
+    static ArrayDeque<Integer> stk = new ArrayDeque<>();
+    static int[] ans;
     public int[] solution(int[] arr) {
-        List<Integer> list = new ArrayList<>();
-        int tmp = -1;
-        for (int i = 0; i < arr.length ; i++) {
-            if (tmp != arr[i]) {
-                list.add(arr[i]);
-                tmp = arr[i];
-            }
+        // 배열 arr에서 연속적으로 나타나는 숫자는 제거하고 남은 수들을 return
+        // 원소들의 순서를 유지
+
+        for (int n : arr) {
+            if (stk.isEmpty()) stk.push(n);
+            else if (!stk.isEmpty() && stk.peek() != n) stk.push(n);
         }
-        
-        int[] answer = new int[list.size()];
-        for (int i = 0; i < answer.length; i++) { answer[i] = list.get(i); }
-        return answer;
+
+        int size = stk.size();
+        ans = new int[size];
+        for (int i = size - 1; i >= 0; i--) {
+            ans[i] = stk.pop();
+        }
+
+        return ans;
     }
 }
