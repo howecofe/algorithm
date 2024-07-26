@@ -1,15 +1,16 @@
 import java.util.*;
 
 class Solution {
+
+    static int res;
     public int solution(int k, int m, int[] score) {
-        int answer = 0;
-        
+        int boxCnt = score.length / m;
+        if (boxCnt == 0) return 0;
+
         Arrays.sort(score);
-        
-        for (int i = score.length - m; i >= 0; i -= m) {
-            answer += score[i] * m;
+        for (int i = 1; i <= boxCnt; i++) {
+            res += score[score.length - m * i] * m;
         }
-        
-        return answer;
+        return res;
     }
 }
