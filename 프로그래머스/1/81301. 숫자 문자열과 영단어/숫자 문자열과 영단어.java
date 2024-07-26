@@ -1,8 +1,8 @@
 import java.util.*;
 
 class Solution {
+    static Map<String, String> map = new HashMap<>();
     public int solution(String s) {
-//         Map<String, String> map = new HashMap<>();
 //         map.put("zero", "0");
 //         map.put("one", "1");
 //         map.put("two", "2");
@@ -13,30 +13,30 @@ class Solution {
 //         map.put("seven", "7");
 //         map.put("eight", "8");
 //         map.put("nine", "9");
-
-//         String word = "";
-//         String numStr = "";
-//         for (char c : s.toCharArray()) {
-//             if ('0' <= c && c <= '9') { word += c; }
+        
+//         StringBuilder res = new StringBuilder();
+//         StringBuilder sb = new StringBuilder();
+        
+//         for (int i = 0; i < s.length(); i++) {
+//             char c = s.charAt(i);
+//             if ('0' <= c && c <= '9') res.append(c);
 //             else {
-//                 numStr += c;
-                
-//                 for (String k : map.keySet()) {
-//                     if (k.equals(numStr)) { 
-//                         word += map.get(k);
-//                         numStr = "";
-//                         break;
-//                     }
+//                 sb.append(c);
+//                 String str = sb.toString();
+//                 if (map.containsKey(str)) {
+//                     res.append(map.get(str));
+//                     sb.delete(0, sb.toString().length());
 //                 }
 //             }
 //         }
-        
-//         return Integer.parseInt(word);
+
+//         return Integer.parseInt(res.toString());
         
         String[] words = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
         for (int i = 0; i < words.length; i++) {
             s = s.replace(words[i], Integer.toString(i));
         }
+        
         return Integer.parseInt(s);
     }
 }
