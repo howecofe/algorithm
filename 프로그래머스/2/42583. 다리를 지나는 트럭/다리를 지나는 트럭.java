@@ -1,30 +1,35 @@
 import java.util.*;
 
 class Solution {
+    static LinkedList<Integer> waitQ = new LinkedList<>();
+    static LinkedList<Integer> ingQ = new LinkedList<>();
+    static int t;
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        LinkedList<Integer[]> brQ = new LinkedList<>(); // 다리 위 트럭 큐
-        LinkedList<Integer> waitQ = new LinkedList<>(); // 대기 트럭 큐
-        for (int w : truck_weights) waitQ.offer(w);
+        // 다리에 올라갈 수 있는 트럭 수 bridge_length
+        // 다리가 견딜 수 있는 무게 weight
+        // 트럭 별 무게 truck_weights
 
-        int brW = 0; // 다리 위의 트럭들의 무게
-        int time = 0;
+        for (int n : truck_weights) waitQ.offer(n);
+        int w = 0;
+        while (!waitQ.isEmpty()) {
+            for (int i = 0; i < bridge_length; i++) {
+                t++;
+                if (!waitQ.isEmpty()) {
+                    int truck = waitQ.peek();
 
-        while (!waitQ.isEmpty() || !brQ.isEmpty()) {
-            // 트럭이 나가야 하는 경우
-            if (!brQ.isEmpty() && brQ.peek()[1] == time) {
-                brW -= brQ.poll()[0];
+                    if (ingQ.size() < bridge_length && w + truck <= weight) {
+                        waitQ.poll(); // 대기열에서 빼기
+                        ingQ.offer(truck); // 다리 건너기
+                        w += truck; // 다리 건너는 트럭 무게 증가
+                    }
+                }
             }
 
-            // 새로운 트럭을 추가했을 때 무게와 다리 길이를 초과하지 않으면 추가
-            if (!waitQ.isEmpty() && brW + waitQ.peek() <= weight && brQ.size() + 1 <= bridge_length) {
-                int w = waitQ.poll();
-                brQ.offer(new Integer[]{w, time + bridge_length}); // (트럭 무게, 트럭이 큐에서 나가야 하는 시간)
-                brW += w;
-            }
-
-            time++;
+            int completedTruck = ingQ.poll();
+            w -= completedTruck;
+            t++;
         }
 
-        return time;
+        return t;
     }
 }
