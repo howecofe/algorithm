@@ -2,27 +2,26 @@ import java.util.*;
 
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-        int answer = n;
-        int[] students = new int[n];
-        
-        // 잃어버린 학생은 -1, 여벌있는 학생은 +1, 결과적으로 잃어버렸지만 여벌있는 학생은 0이 됨.
-        for (int l : lost) { students[l - 1]--; }
-        for (int r : reserve) { students[r - 1]++; }
-        
-        for (int i = 0; i < students.length; i++) {
-            if (students[i] == -1) {
-                if (i - 1 >= 0 && students[i - 1] == 1) {
-                    students[i]++;
-                    students[i - 1]--;
-                } else if (i + 1 < students.length && students[i + 1] == 1) {
-                    students[i]++;
-                    students[i + 1]--;
+        int[] stu = new int[n + 1]; // 0: dummy
+        int cnt = n;
+
+        for (int l : lost) stu[l]--;
+        for (int r : reserve) stu[r]++;
+
+        for (int i = 1; i < stu.length; i++) {
+            if (stu[i] < 0) { // 잃어버린 경우
+                if (i - 1 > 0 && stu[i - 1] > 0) {
+                    stu[i]++;
+                    stu[i - 1]--;
+                } else if (i + 1 <= n && stu[i + 1] > 0) {
+                    stu[i]++;
+                    stu[i + 1]--;
                 } else {
-                    answer--;
+                    cnt--;
                 }
             }
         }
-        
-        return answer;
+
+        return cnt;
     }
 }
