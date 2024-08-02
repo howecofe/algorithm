@@ -2,76 +2,21 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] people, int limit) {
-        int answer = 0;
-        
-        // 1. 반복문으로 풀기 -> 시간 초과
-//         List<Integer> list = new ArrayList<>();
-//         for (int p : people) { list.add(p); }
-//         Collections.sort(list, Collections.reverseOrder());
-//         
-//         while (list.size() > 0) {
-//             answer++;
-//             int max = list.get(0);
-//             list.remove(0);
-            
-//             for (int i = 0; i < list.size(); i++) {
-//                 if (max + list.get(i) > limit) {
-//                     continue;
-//                 } else {
-//                     list.remove(i);
-//                     break;
-//                 }
-//             }
-//         }
-        
-        // 2. 스택으로 풀기 -> 시간 초과
-//         Stack<Integer> stack = new Stack<>();
-//         while (list.size() > 0) {
-//             boolean isSingle = true;
-//             for (int i = 0; i < list.size(); i++) {
-//                 if (stack.isEmpty()) {
-//                     stack.push(list.get(i));
-//                     list.remove(i);
-//                     isSingle = false;
-//                     break;
-//                 } else {
-//                     if (stack.peek() + list.get(i) <= limit) {
-//                         answer++;
-//                         stack.pop();
-//                         list.remove(i);
-//                         isSingle = false;
-//                         break;
-//                     }
-//                 }
-//             }
-            
-//             if (isSingle) {
-//                 answer++;
-//                 stack.pop();
-//             }
-//         }
-        
-//         if (!stack.isEmpty()) { answer++; }
-          
         Arrays.sort(people);
+        int cnt = 0;
         int left = 0;
         int right = people.length - 1;
-        
+
+        // left가 right를 넘으면 모든 사람이 다 탔다는 뜻
         while (left <= right) {
-            if (left == right) {
-                answer++;
-                break;
-            }
-            
-            // if (left < right)
             if (people[left] + people[right] <= limit) {
-                left++;
+                left++; // left 사람 태움
             }
-            answer++;
-            right--;
+
+            right--; // right 사람은 항상 태움
+            cnt++;
         }
-        
-        return answer;
-        
+
+        return cnt;
     }
 }
