@@ -5,8 +5,9 @@ class Solution {
     static List<List<Integer>> list = new ArrayList<>(); // 인접리스트
     static boolean[] visited;
     static Queue<int[]> q = new LinkedList<>();
+    static int maxDist;
     
-    public static int solution(int n, int[][] edge) {
+    public int solution(int n, int[][] edge) {
         visited = new boolean[n + 1]; // 0: dummy
         for (int i = 0; i <= n; i++) list.add(new ArrayList<>()); // 0: dummy
 
@@ -18,11 +19,7 @@ class Solution {
 
         bfs();
 
-        // 가장 멀리 떨어진 노드의 개수 구하기
-        List<Integer> keys = new ArrayList<>(costMap.keySet());
-        keys.sort(Comparator.reverseOrder());
-
-        return costMap.get(keys.get(0));
+        return costMap.get(maxDist);
     }
 
     static void bfs() {
@@ -34,8 +31,9 @@ class Solution {
             int[] tmp = q.poll();
             int node = tmp[0];
             int cost = tmp[1];
-            
-            costMap.put(cost, costMap.getOrDefault(cost, 0) + 1);
+
+            maxDist = cost; // 최장 거리 갱신
+            costMap.put(cost, costMap.getOrDefault(cost, 0) + 1); // 카운트 저장
 
             for (int n : list.get(node)) {
                 if (visited[n]) continue;
