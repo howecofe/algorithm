@@ -1,20 +1,25 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int totalPrice = sc.nextInt();
-        int totalCnt = sc.nextInt();
-        int sum = 0;
 
-        for (int i = 0; i < totalCnt; i++) {
-            int price = sc.nextInt();
-            int cnt = sc.nextInt();
-            sum += price * cnt;
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        int X = in.nextInt();
+        int N = in.nextInt();
+        int T = 0;
+
+        for (int i = 0; i < N; i++) {
+            int a = in.nextInt();
+            int b = in.nextInt();
+            T += a * b;
         }
 
-        String answer = totalPrice == sum ? "Yes" : "No";
+        if (X == T) {
+            System.out.println("Yes");
+        } else {
+            System.out.println("No");
+        }
 
-        System.out.println(answer);
     }
 }
