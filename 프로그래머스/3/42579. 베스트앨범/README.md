@@ -1,10 +1,10 @@
 # [level 3] 베스트앨범 - 42579 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42579#qna) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42579) 
 
 ### 성능 요약
 
-메모리: 72.4 MB, 시간: 2.04 ms
+메모리: 70.3 MB, 시간: 1.96 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 07월 23일 22:17:43
+2024년 09월 30일 23:36:09
 
 ### 문제 설명
 
