@@ -1,46 +1,54 @@
 import java.util.*;
 
 class Solution {
-    static LinkedList<Integer> pq = new LinkedList<>();
-    static LinkedList<Integer> sq = new LinkedList<>();
-    static List<Integer> cntList = new ArrayList<>();
-    static int[] ans;
+
     public int[] solution(int[] progresses, int[] speeds) {
-        // 먼저 배포되어야 하는 순서대로 작업의 진도가 적힌 정수 배열 progresses
-        // 각 작업의 개발 속도가 적힌 정수 배열 speeds
-        // 각 배포마다 몇 개의 기능이 배포되는지를 return
-        // 뒤에 있는 기능이 앞에 있는 기능보다 먼저 개발될 수 있고, 이때 뒤에 있는 기능은 앞에 있는 기능이 배포될 때 함께 배포
+        List<Integer> ansList = new ArrayList<>();
+        LinkedList<Integer> pgs = new LinkedList<>();
+        LinkedList<Integer> spd = new LinkedList<>();
+        int len = progresses.length;
 
-        // 풀이
-        // 맨 앞 기능이 100 이상이 될 때까지 순회하면서 작업
-        // 맨 앞 기능이 100 이상이 되면, 100을 넘는 작업들 꺼내기
+        for (int i = 0; i < len; i++) {
+            pgs.offer(progresses[i]);
+            spd.offer(speeds[i]);
+        }
 
-        for (int p : progresses) pq.offer(p);
-        for (int s : speeds) sq.offer(s);
+        while (!pgs.isEmpty() && !spd.isEmpty()) {
+            int firstPgs = pgs.peek();
+            int firstSpd = spd.peek();
 
-        while (!pq.isEmpty()) {
-            for (int i = 0; i < pq.size(); i++) {
-                int p = pq.poll();
-                int s = sq.poll();
-                pq.offer(p + s);
-                sq.offer(s);
+            // 첫 요소가 100 이상이면 배포 카운트
+            if (firstPgs >= 100) {
+                int cnt = 0;
+
+                while (!pgs.isEmpty()) {
+                    if (pgs.peek() >= 100) {
+                        pgs.poll();
+                        spd.poll();
+                        cnt++;
+                    } else {
+                        break;
+                    }
+                }
+
+                ansList.add(cnt);
+            } else { // 모든 요소를 순회하며 값 증가시키기
+                int days = (int) Math.ceil((100 - firstPgs) / (double) firstSpd);
+
+                for (int i = 0; i < pgs.size(); i++) {
+                    int p = pgs.poll();
+                    int s = spd.poll();
+                    pgs.offer(p + s * days);
+                    spd.offer(s);
+                }
             }
 
-            int cnt = 0;
-            // 완료된 작업(100)까지만 빼내기
-            while (pq.peek() != null && pq.peek() >= 100) {
-                cnt++;
-                pq.poll();
-                sq.poll();
-            }
-
-            if (cnt > 0) cntList.add(cnt);
         }
 
         // list -> array
-        ans = new int[cntList.size()];
-        for (int i = 0; i < ans.length; i++) ans[i] = cntList.get(i);
+        int[] answer = new int[ansList.size()];
+        for (int i = 0; i < answer.length; i++) answer[i] = ansList.get(i);
 
-        return ans;
+        return answer;
     }
 }
