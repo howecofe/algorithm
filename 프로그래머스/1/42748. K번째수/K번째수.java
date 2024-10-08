@@ -2,15 +2,22 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
-        int len = commands.length;
-        int[] answer = new int[len];
-
-        for (int i = 0; i < len; i++) {
-            int[] arr = Arrays.copyOfRange(array, commands[i][0] - 1, commands[i][1]);
-            Arrays.sort(arr);
-            answer[i] = arr[commands[i][2] - 1];
+        int[] answer = new int[commands.length];
+        
+        for (int m = 0; m < commands.length; m++) {
+            int i = commands[m][0] - 1;
+            int j = commands[m][1] - 1;
+            int k = commands[m][2] - 1;
+            
+            int[] tmp = new int[j - i + 1];
+            for (int n = i; n <= j; n++) {
+                tmp[n - i] = array[n];
+            }
+            
+            Arrays.sort(tmp);
+            answer[m] = tmp[k];
         }
-
+        
         return answer;
     }
 }
