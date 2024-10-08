@@ -1,31 +1,34 @@
 import java.util.*;
 
 class Solution {
-    static int[] answer = new int[]{0, 0};
-    static Queue<Integer> minQ = new PriorityQueue<>();
-    static Queue<Integer> maxQ = new PriorityQueue<>(((o1, o2) -> o2 - o1));
 
     public int[] solution(String[] operations) {
+        int[] answer = new int[2];
+        Queue<Integer> maxQ = new PriorityQueue<>((o1, o2) -> o2 - o1);
+        Queue<Integer> minQ = new PriorityQueue<>();
+        
         for (String op : operations) {
             String[] arr = op.split(" ");
-
+            int n = Integer.parseInt(arr[1]);
             if (arr[0].equals("I")) {
-                minQ.offer(Integer.parseInt(arr[1]));
-                maxQ.offer(Integer.parseInt(arr[1]));
-            } else if (!maxQ.isEmpty() && arr[0].equals("D") && arr[1].equals("1")) {
-                int max = maxQ.poll();
-                minQ.remove(max);
-            } else if (!minQ.isEmpty() && arr[0].equals("D") && arr[1].equals("-1")) {
-                int min = minQ.poll();
-                maxQ.remove(min);
+                maxQ.offer(n);
+                minQ.offer(n);
+            } else {
+                if (!maxQ.isEmpty() && n == 1) {
+                    int max = maxQ.poll();
+                    minQ.remove(max);
+                } else if (!minQ.isEmpty() && n == -1) {
+                    int min = minQ.poll();
+                    maxQ.remove(min);
+                }
             }
         }
-
+        
         if (!minQ.isEmpty() && !maxQ.isEmpty()) {
-            answer[0] = maxQ.peek();
-            answer[1] = minQ.peek();
+            answer[0] = maxQ.poll();
+            answer[1] = minQ.poll();
         }
-
+        
         return answer;
     }
 
