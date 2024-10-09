@@ -2,33 +2,33 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] answers) {
-        List<Integer> list = new ArrayList<>();
-        int[] arr1 = {1, 2, 3, 4, 5};
-        int[] arr2 = {2, 1, 2, 3, 2, 4, 2, 5};
-        int[] arr3 = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
-        int[] score = new int[4]; // 0: dummy
-
-        // 정답 개수 구하기
-        for (int i = 0; i < answers.length; i++) {
-            if (answers[i] == arr1[i % 5]) score[1]++;
-            if (answers[i] == arr2[i % 8]) score[2]++;
-            if (answers[i] == arr3[i % 10]) score[3]++;
-        }
-
-        // 최댓값 구하기
-        int[] copied = Arrays.copyOf(score, 4);
-        Arrays.sort(copied);
-        int max = copied[3];
-
-        // 1등 구하기
+        List<int[]> list = new ArrayList<>();
+        
         for (int i = 1; i <= 3; i++) {
-            if (score[i] == max) list.add(i);
+            int[] arr;
+            
+            if (i == 1) arr = new int[]{1, 2, 3, 4, 5};
+            else if (i == 2) arr = new int[]{2, 1, 2, 3, 2, 4, 2, 5};
+            else arr = new int[]{3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+            
+            int len = arr.length;
+            int cnt = 0;
+            
+            for (int j = 0; j < answers.length; j++) {
+                if (answers[j] == arr[j % len]) cnt++;
+            }
+            
+            if (list.isEmpty() || list.get(list.size() - 1)[1] == cnt) {
+                list.add(new int[]{i, cnt});
+            } else if (list.get(list.size() - 1)[1] < cnt) {
+                list.set(list.size() - 1, new int[]{i , cnt});
+            }
         }
-
+        
         // list -> array
-        int[] res = new int[list.size()];
-        for (int i = 0; i < res.length; i++) res[i] = list.get(i);
-
-        return res;
+        int[] answer = new int[list.size()];
+        for (int i = 0; i < answer.length; i++) answer[i] = list.get(i)[0];
+        
+        return answer;
     }
 }
