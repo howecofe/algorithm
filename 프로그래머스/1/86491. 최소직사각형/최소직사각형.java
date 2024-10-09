@@ -1,12 +1,13 @@
 class Solution {
     public int solution(int[][] sizes) {
-        int mw = 0, mh = 0;
-
-        for (int[] s : sizes) {
-            mw = Math.max(mw, Math.max(s[0], s[1]));
-            mh = Math.max(mh, Math.min(s[0], s[1]));
+        int w = 0;
+        int h = 0;
+        
+        for (int[] size : sizes) {
+            w = Math.max(w, Math.max(size[0], size[1]));
+            h = Math.max(h, Math.min(size[0], size[1]));
         }
         
-        return mw * mh;
+        return w * h;
     }
 }
