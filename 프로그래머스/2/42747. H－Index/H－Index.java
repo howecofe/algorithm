@@ -2,24 +2,18 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] citations) {
-        List<Integer> list = new ArrayList<>();
-        for (int c : citations) list.add(c);
-        list.sort(Comparator.reverseOrder());
-
-        int answer = 0;
-        int max = list.get(0);
-        for (int h = max; h >= 0; h--) {
+        Arrays.sort(citations);
+        int h = citations[citations.length - 1];
+        
+        while (h > 0) {
             int cnt = 0;
-            for (int c : citations) {
-                if (c >= h) cnt++;
+            for (int i = citations.length - 1; i >= 0; i--) {
+                if (citations[i] >= h) cnt++;
             }
-
-            if (cnt >= h) {
-                answer = h;
-                break;
-            }
+            if (cnt >= h) break;
+            h--;
         }
-
-        return answer;
+        
+        return h;
     }
 }
