@@ -1,32 +1,29 @@
 import java.util.*;
 
 class Solution {
-    static String[] alpha = {"A", "E", "I", "O", "U"};
-    static List<String> dict = new ArrayList<>();
+    static char[] dict = {'A', 'E', 'I', 'O', 'U'};
+    static int cnt, answer;
     static String target;
-    static int res;
-    
-    public static int solution(String word) {
+
+    public int solution(String word) {
         target = word;
-
+        
         dfs(0, "");
-
-        return res;
+        
+        return answer;
     }
 
-    static void dfs(int depth, String s) {
-        if (depth == alpha.length) return;
+    static void dfs(int depth, String word) {
+        if (word.equals(target)) {
+            answer = cnt;
+            return;
+        }
 
-        for (int i = 0; i < alpha.length; i++) {
-            dict.add(s + alpha[i]);
+        if (depth == 5) return;
 
-            // 찾으려는 단어가 있는지 확인
-            if (dict.contains(target)) {
-                res = dict.indexOf(target) + 1;
-                return;
-            }
-
-            dfs(depth + 1, s + alpha[i]);
+        for (int i = 0; i < 5; i++) {
+            cnt++;
+            dfs(depth + 1, word + dict[i]);
         }
     }
 }
