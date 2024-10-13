@@ -2,26 +2,33 @@ import java.util.*;
 
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-        int[] stu = new int[n + 1]; // 0: dummy
-        int cnt = n;
+        Arrays.sort(reserve);
+        
+        List<Integer> lList = new ArrayList<>();
+        List<Integer> rList = new ArrayList<>();
+        
+        for (int l : lost) lList.add(l);
+        for (int r : reserve) rList.add(r);
 
-        for (int l : lost) stu[l]--;
-        for (int r : reserve) stu[r]++;
-
-        for (int i = 1; i < stu.length; i++) {
-            if (stu[i] < 0) { // 잃어버린 경우
-                if (i - 1 > 0 && stu[i - 1] > 0) {
-                    stu[i]++;
-                    stu[i - 1]--;
-                } else if (i + 1 <= n && stu[i + 1] > 0) {
-                    stu[i]++;
-                    stu[i + 1]--;
-                } else {
-                    cnt--;
-                }
+        // 본인 도난 check
+        List<Integer> tmp = new ArrayList<>();
+        for (int r : rList) {
+            if (lList.contains(r)) tmp.add(r);
+        }
+        
+        if (!tmp.isEmpty()) {
+            for (int t : tmp) {
+                lList.remove(new Integer(t));
+                rList.remove(new Integer(t));
             }
         }
-
-        return cnt;
+        
+        // 다른사람 도난 check
+        for (int r : rList) {
+            if (lList.contains(r - 1)) lList.remove(new Integer(r - 1));
+            else if (lList.contains(r + 1)) lList.remove(new Integer(r + 1));
+        }
+        
+        return n - lList.size();
     }
 }
