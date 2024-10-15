@@ -1,7 +1,2 @@
-SELECT COUNT(*)
-FROM (
-    SELECT NAME, COUNT(*)
-    FROM ANIMAL_INS
-    WHERE NAME IS NOT NULL
-    GROUP BY NAME
-) AS C;
+select count(distinct NAME) count
+from ANIMAL_INS;
