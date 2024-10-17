@@ -1,23 +1,24 @@
 class Solution {
-    static int ans, tgt;
-    static int[] arr;
+    static int tgt, answer;
+    static int[] nums;
     
     public int solution(int[] numbers, int target) {
-        arr = numbers.clone();
+        nums = numbers.clone();
         tgt = target;
-
+        
         dfs(0, 0);
-
-        return ans;
+        
+        return answer;
     }
-
-    static void dfs(int sum, int depth) {
-        if (depth == arr.length) {
-            if (sum == tgt) ans++;
+    
+    static void dfs(int depth, int sum) {
+        if (depth == nums.length) {
+            if (sum == tgt) answer++;
             return;
         }
-
-        dfs(sum + arr[depth], depth + 1);
-        dfs(sum - arr[depth], depth + 1);
+        
+        dfs(depth + 1, sum + nums[depth]);
+        dfs(depth + 1, sum - nums[depth]);
     }
+
 }
