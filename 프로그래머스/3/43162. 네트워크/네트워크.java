@@ -1,31 +1,27 @@
 class Solution {
-    static int[][] arr;
-    static int ans;
+    static int answer, N;
     static boolean[] visited;
     
     public int solution(int n, int[][] computers) {
-        visited = new boolean[n];
-        arr = new int[n][];
-        for (int i = 0; i < n; i++) {
-            arr[i] = computers[i].clone();
+        N = n;
+        visited = new boolean[N];
+        
+        for (int i = 0; i < N; i++) {
+            if (visited[i]) continue;
+            answer++;
+            dfs(i, computers);
         }
-
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                ans++;
-                dfs(i);
-            }
-        }
-        return ans;
+        
+        return answer;
     }
-
-    static void dfs(int node) {
+    
+    static void dfs(int node, int[][] map) {
         visited[node] = true;
-
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[node][i] == 0 || visited[i]) continue;
-
-            dfs(i);
+        
+        for (int i = 0; i < N; i++) {
+            if (visited[i] || map[node][i] == 0) continue;
+            
+            dfs(i, map);
         }
     }
     
