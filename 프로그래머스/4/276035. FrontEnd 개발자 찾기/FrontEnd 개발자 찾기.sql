@@ -1,3 +1,11 @@
+select distinct D.ID, D.EMAIL, D.FIRST_NAME, D.LAST_NAME
+from
+    DEVELOPERS D,
+    SKILLCODES S
+where S.CATEGORY = 'Front End'
+and D.SKILL_CODE & S.CODE
+order by D.ID;
+
 # SELECT
 #     ID,
 #     EMAIL,
@@ -19,16 +27,16 @@
 # ORDER BY
 #     ID;
     
-SELECT
-    DISTINCT ID,
-    EMAIL,
-    FIRST_NAME,
-    LAST_NAME
-FROM
-    DEVELOPERS
-WHERE 
-    SKILL_CODE & (
-        SELECT SUM(CODE) FROM SKILLCODES WHERE CATEGORY = 'Front End'
-    )
-ORDER BY
-    ID;
+# SELECT
+#     DISTINCT ID,
+#     EMAIL,
+#     FIRST_NAME,
+#     LAST_NAME
+# FROM
+#     DEVELOPERS
+# WHERE 
+#     SKILL_CODE & (
+#         SELECT SUM(CODE) FROM SKILLCODES WHERE CATEGORY = 'Front End'
+#     )
+# ORDER BY
+#     ID;
