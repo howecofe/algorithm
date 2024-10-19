@@ -1,14 +1,7 @@
-SELECT
-    I.ANIMAL_ID,
-    I.ANIMAL_TYPE,
-    I.NAME
-FROM
-    ANIMAL_INS AS I
-    JOIN ANIMAL_OUTS AS O
-    ON I.ANIMAL_ID = O.ANIMAL_ID
-WHERE
-    I.SEX_UPON_INTAKE LIKE 'Intact%'
-    AND (O.SEX_UPON_OUTCOME LIKE 'Neutered%'
-        OR O.SEX_UPON_OUTCOME LIKE 'Spayed%')
-ORDER BY
-    I.ANIMAL_ID;
+select I.ANIMAL_ID, I.ANIMAL_TYPE, I.NAME
+from ANIMAL_INS I join ANIMAL_OUTS O on I.ANIMAL_ID = O.ANIMAL_ID
+where
+    I.SEX_UPON_INTAKE like 'Intact%'
+    and (O.SEX_UPON_OUTCOME like 'Spayed%'
+         or O.SEX_UPON_OUTCOME like 'Neutered%')
+order by I.ANIMAL_ID;
